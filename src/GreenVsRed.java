@@ -1,9 +1,9 @@
 import java.util.ArrayDeque;
 
-public class Game {
+public class GreenVsRed implements Game {
     private Grid grid;
 
-    public Game(Grid grid) {
+    public GreenVsRed(Grid grid) {
         if (!grid.isGridFilled()) {
             throw new IllegalStateException("Grid is empty!");
         }
@@ -17,8 +17,8 @@ public class Game {
             throw new IllegalArgumentException("This coordinate does not exist!");
         }
 
-        ArrayDeque<int[]> redDeque = new ArrayDeque<>();
-        ArrayDeque<int[]> greenDeque = new ArrayDeque<>();
+        ArrayDeque<int[]> redCellsNextGeneration = new ArrayDeque<>();
+        ArrayDeque<int[]> greenCellsNextGeneration = new ArrayDeque<>();
 
         int counterGeneration = 0;
 
@@ -36,28 +36,31 @@ public class Game {
                     //if current cell is green and in next generation must be red - push in redDeque
                     if (grid[r][c] == '1') {
                         if (greenNeighbours != 2 && greenNeighbours != 3 && greenNeighbours != 6) {
-                            redDeque.push(new int[]{r, c});
+                            redCellsNextGeneration.push(new int[]{r, c});
                         }
                     } else {
                         //if current cell is red and in next generation must be green - push in greenDeque
                         if (greenNeighbours == 3 || greenNeighbours == 6) {
-                            greenDeque.push(new int[]{r, c});
+                            greenCellsNextGeneration.push(new int[]{r, c});
                         }
                     }
                 }
             }
             // change green cells into red in grid
-            while (!redDeque.isEmpty()) {
-                int[] currentCell = redDeque.pop();
-                grid[currentCell[0]][currentCell[1]] = '0';
-            }
+            changeGridCellsColor(grid, redCellsNextGeneration, '0');
             // change red cells into green in grid
-            while (!greenDeque.isEmpty()) {
-                int[] currentCell = greenDeque.pop();
-                grid[currentCell[0]][currentCell[1]] = '1';
-            }
+
+            changeGridCellsColor(grid, greenCellsNextGeneration, '1');
+
         }
         return counterGeneration;
+    }
+
+    private void changeGridCellsColor(char[][] grid, ArrayDeque<int[]> cellsNextGeneration, char symbol) {
+        while (!cellsNextGeneration.isEmpty()) {
+            int[] currentCell = cellsNextGeneration.pop();
+            grid[currentCell[0]][currentCell[1]] = symbol;
+        }
     }
 
     private static int getGreenNeighbours(char[][] matrix, int row, int col) {

@@ -35,7 +35,7 @@ Important facts:
  
  1, 0, 10
  
-- expected result: 5
+expected result: 5
  
  EXAMPLE 2:
   - 4x4  grid. Input:
@@ -52,5 +52,8 @@ Important facts:
  
  2, 2, 15
  
- - expected result: 14
+expected result: 14
  
+STARTING THE APPLICATION
+ 
+ - Compile the application and execute the Main.class

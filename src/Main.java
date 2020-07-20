@@ -28,7 +28,7 @@ public class Main {
             // fill grid whit green and red cells from String array
             grid.fillGrid(inputRows);
 
-            Game game = new Game(grid);
+            GreenVsRed game = new GreenVsRed(grid);
             System.out.println("Enter in format 'X, Y, N', where X is column, Y is row of coordinate of cell and N is number generation:");
             String inputGameAnswer = scanner.nextLine();
             String[] inputGame = inputGameAnswer.split(", ");
@@ -44,5 +44,3 @@ public class Main {
 
     }
 }
-
-
